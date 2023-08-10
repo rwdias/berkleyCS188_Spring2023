@@ -27,7 +27,8 @@ Welcome to the repository for my AI projects completed as part of the University
 Each project folder contains detailed instructions on how to run and test the code. Make sure you read the documentation provided in each project directory before getting started.
 
 ## Requirements
-- Python (version X.X)
+- Python (version >= 3.6)
+- Anaconda
 - Additional requirements as specified in each project's documentation
 
 ## License
