@@ -87,13 +87,59 @@ def depthFirstSearch(problem: SearchProblem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** MY CODE INICIATES HERE ***"
+    pilha = util.Stack()
     
+    # Adiciona o estado inicial e um caminho vazio na pilha
+    pilha.push((problem.getStartState(), []))
+    
+    # Conjunto para rastrear os estados já visitados
+    visited = set()
+    
+    while not pilha.isEmpty():
+        state, path = pilha.pop()
+        
+        if problem.isGoalState(state):
+            return path
+        
+        if state not in visited:
+            visited.add(state)
+            
+            for successor, action, _ in problem.getSuccessors(state):
+                new_path = path + [action]
+                pilha.push((successor, new_path))
+    
+    return []  # Retorna uma lista vazia se não encontrar uma solução
+
     util.raiseNotDefined()
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
-    
+
+    from game import Directions  
+
+    fila = util.Queue()  # Initialize a queue for BFS
+    fila.push((problem.getStartState(), []))  # Add the initial state and an empty path
+
+    # Conjunto para rastrear os estados já visitados
+    visited = set() 
+
+    while not fila.isEmpty():
+        state, path = fila.pop()
+
+        if problem.isGoalState(state):
+            return path  
+
+        if state not in visited:
+            visited.add(state)
+
+            for successor, action, _ in problem.getSuccessors(state):
+                new_path = path + [action]
+                fila.push((successor, new_path))
+
+    return []  # Retorna uma lista vazia se não encontrar uma solução
+
+
     util.raiseNotDefined()
 
 def uniformCostSearch(problem: SearchProblem):
