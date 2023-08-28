@@ -114,7 +114,7 @@ def depthFirstSearch(problem: SearchProblem):
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
+   
 
     from game import Directions  
 
@@ -145,6 +145,30 @@ def breadthFirstSearch(problem: SearchProblem):
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    pq = util.PriorityQueue()
+
+    # Add the initial state and its cost to the priority queue
+    pq.push((problem.getStartState(), [], 0), 0)
+
+    # Set to keep track of visited states
+    visited = set()
+
+    while not pq.isEmpty():
+        state, path, cost = pq.pop()
+
+        if problem.isGoalState(state):
+            return path
+
+        if state not in visited:
+            visited.add(state)
+
+            for successor, action, step_cost in problem.getSuccessors(state):
+                new_path = path + [action]
+                new_cost = cost + step_cost
+                pq.push((successor, new_path, new_cost), new_cost)
+
+    return []  # Return an empty list if no solution is found
+
     util.raiseNotDefined()
 
 def nullHeuristic(state, problem=None):
@@ -155,9 +179,32 @@ def nullHeuristic(state, problem=None):
     return 0
 
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
-    """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    """Pesquisar o nó que possui o menor custo combinado e heurística primeiro."""
+    # Inicialize uma fila de prioridade para a busca A*
+    pq = util.PriorityQueue()
+
+    # Adicione o estado inicial, um caminho vazio e uma prioridade baseada na heurística
+    pq.push((problem.getStartState(), [], 0), heuristic(problem.getStartState(), problem))
+
+    # Conjunto para rastrear os estados já visitados
+    visitados = set()
+
+    while not pq.isEmpty():
+        estado, caminho, custo = pq.pop()
+
+        if problem.isGoalState(estado):
+            return caminho
+
+        if estado not in visitados:
+            visitados.add(estado)
+
+            for sucessor, acao, custo_passo in problem.getSuccessors(estado):
+                novo_caminho = caminho + [acao]
+                novo_custo = custo + custo_passo
+                prioridade = novo_custo + heuristic(sucessor, problem)
+                pq.push((sucessor, novo_caminho, novo_custo), prioridade)
+
+    return []  # Retorne uma lista vazia se não encontrar uma solução
 
 
 # Abbreviations
