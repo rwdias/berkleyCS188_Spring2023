@@ -144,13 +144,12 @@ def breadthFirstSearch(problem: SearchProblem):
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
-    "*** YOUR CODE HERE ***"
+
     pq = util.PriorityQueue()
 
-    # Add the initial state and its cost to the priority queue
     pq.push((problem.getStartState(), [], 0), 0)
 
-    # Set to keep track of visited states
+
     visited = set()
 
     while not pq.isEmpty():
@@ -167,7 +166,7 @@ def uniformCostSearch(problem: SearchProblem):
                 new_cost = cost + step_cost
                 pq.push((successor, new_path, new_cost), new_cost)
 
-    return []  # Return an empty list if no solution is found
+    return []  # Retorne uma lista vazia se não encontrar uma solução
 
     util.raiseNotDefined()
 
