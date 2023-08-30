@@ -296,13 +296,17 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        return self.startingPosition
+
+        #util.raiseNotDefined()
 
     def isGoalState(self, state: Any):
         """
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
+        visited_corners = state  
+        return all(visited_corners)
         util.raiseNotDefined()
 
     def getSuccessors(self, state: Any):
@@ -317,17 +321,18 @@ class CornersProblem(search.SearchProblem):
         """
 
         successors = []
+        x, y = state  # Current position
+
         for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
-            # Add a successor state to the successor list if the action is legal
-            # Here's a code snippet for figuring out whether a new position hits a wall:
-            #   x,y = currentPosition
-            #   dx, dy = Actions.directionToVector(action)
-            #   nextx, nexty = int(x + dx), int(y + dy)
-            #   hitsWall = self.walls[nextx][nexty]
-
-            "*** YOUR CODE HERE ***"
-
-        self._expanded += 1 # DO NOT CHANGE
+            dx, dy = Actions.directionToVector(action)
+            next_x, next_y = int(x + dx), int(y + dy)
+            
+            # Check if the next position is not a wall
+            if not self.walls[next_x][next_y]:
+                next_state = (next_x, next_y)
+                cost = 1  # Cost of the action is 1 in this case
+                successors.append((next_state, action, cost))
+                
         return successors
 
     def getCostOfActions(self, actions):
@@ -361,6 +366,7 @@ def cornersHeuristic(state: Any, problem: CornersProblem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
+
     return 0 # Default to trivial solution
 
 class AStarCornersAgent(SearchAgent):
@@ -486,6 +492,7 @@ class ClosestDotSearchAgent(SearchAgent):
         problem = AnyFoodSearchProblem(gameState)
 
         "*** YOUR CODE HERE ***"
+
         util.raiseNotDefined()
 
 class AnyFoodSearchProblem(PositionSearchProblem):
